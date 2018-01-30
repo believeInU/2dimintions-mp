@@ -16,6 +16,8 @@ public class Path {
 			functions[i] = new Line(points[i], points[i+1]);
 			lengths[i] = functions[i].distanceTraveled(points[i+1]);
 		}
+		functions[0].setLinePose(Line.line.START);
+		functions[functions.length-1].setLinePose(Line.line.END);
 	}
 	
 	public double getError(Line function, Point p) {
@@ -32,9 +34,9 @@ public class Path {
 		double ID=0;
 		for (int i = 0; i < functions.length; i++) {
 			d = getError(functions[i],p);
-			double x = functions[i].getLine()[0] == 0 ? p.get()[0] : (p.get()[1] - functions[i].getLine()[1] + p.get()[0] / functions[i].getLine()[0]) / (functions[i].getLine()[0] + 1 / functions[i].getLine()[0]);
+			Point current = getWantedPoint(i,p);
 			
-			if (functions[i].getPointA()[0] <= x && functions[i].getPointB()[0] >= x) {
+			if (functions[i].inLine(current)) {
 				if (Math.abs(minD) >= Math.abs(d)) {
 					minD = d;
 					ID = i;
@@ -46,13 +48,18 @@ public class Path {
 		return distance;
 	}
 	
+	public Point getWantedPoint(int ID, Point p) {
+		double x = functions[ID].getLine()[0] == 0 ? p.get()[0] : (p.get()[1] - functions[ID].getLine()[1] + p.get()[0] / functions[ID].getLine()[0]) / (functions[ID].getLine()[0] + 1 / functions[ID].getLine()[0]);
+		double y = functions[ID].getLine()[0] * x + functions[ID].getLine()[1];
+		Point wanted = new Point(x,y);
+		return wanted;
+	}
+	
 	public double getLength(int ID,Point p) {
 		double total = 0;
 		for (int i = 0; i < ID; i++)
 			total += lengths[i];
-		double x = functions[ID].getLine()[0] == 0 ? p.get()[0] : (p.get()[1] - functions[ID].getLine()[1] + p.get()[0] / functions[ID].getLine()[0]) / (functions[ID].getLine()[0] + 1 / functions[ID].getLine()[0]);
-		double y = functions[ID].getLine()[0] * x + functions[ID].getLine()[1];
-		Point current = new Point(x,y);
+		Point current = getWantedPoint(ID,p);
 		total += functions[ID].distanceTraveled(current);
 		return total;
 	}

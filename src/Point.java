@@ -8,6 +8,12 @@ public class Point {
 		this.y=y;
 	}
 	
+	public void setPoint(double x, double y) {
+		this.x=x;
+		this.y=y;
+	}
+
+	
 	public double[] get() {
 		double[] point = {x,y};
 		return point;

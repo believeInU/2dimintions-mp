@@ -1,16 +1,33 @@
 
 public class Line {
+	
+	public enum line {
+		START,
+		MIDLE,
+		END
+	}
+	
 	private Point A;
 	private Point B;
 	
 	private double m;
 	private double n;
+	private line linePos;
 	
 	public Line(Point a, Point b) {
+		this(a, b, line.MIDLE);
+	}
+	
+	public Line(Point a, Point b, line l) {
 		A = a;
 		B = b;
+		linePos = l;
 		
 		calcFunction(a,b);
+	}
+	
+	public void setLinePose(line l) {
+		linePos = l;
 	}
 
 	public void calcFunction(Point a, Point b) {
@@ -41,6 +58,30 @@ public class Line {
 	public double distanceTraveled(Point p) {
 		double dx = p.get()[0] - A.get()[0];
 		double dy = p.get()[1] - A.get()[1];
-		return Math.sqrt(dx * dx + dy * dy);
+		double distance = Math.sqrt(dx * dx + dy * dy);
+		if (A.get()[0] <= B.get()[0]) 
+			return distance * (A.get()[0] <= p.get()[0] ? 1 : -1);
+		else
+			return distance * (A.get()[0] < p.get()[0] ? -1 : 1);
+			
+			
+	}
+	
+	public boolean inLine(Point p) {
+		switch(linePos) {
+		default:
+		case MIDLE:
+			if (A.get()[0] < B.get()[0])
+				return (A.get()[0] <= p.get()[0]) && (p.get()[0] <= B.get()[0]);
+			return (B.get()[0] <= p.get()[0]) && (p.get()[0] <= A.get()[0]);
+		case START: 
+			if (A.get()[0] < B.get()[0])
+				return (p.get()[0] <= B.get()[0]);
+			return (B.get()[0] <= p.get()[0]);
+		case END: 
+			if (A.get()[0] < B.get()[0])
+				return (A.get()[0] <= p.get()[0]);
+			return (p.get()[0] <= A.get()[0]);
+		}
 	}
 }

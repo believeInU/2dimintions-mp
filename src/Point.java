@@ -13,6 +13,11 @@ public class Point {
 		this.y=y;
 	}
 
+	public double disPoint(Point p) {
+		double dx = p.get()[0] - x;
+		double dy = p.get()[1] - y;
+		return Math.sqrt(dx * dx + dy * dy);
+	}
 	
 	public double[] get() {
 		double[] point = {x,y};

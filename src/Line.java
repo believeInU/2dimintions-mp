@@ -84,4 +84,16 @@ public class Line {
 			return (p.get()[0] <= A.get()[0]);
 		}
 	}
+	
+	public boolean isRight(Point p) {
+		double x = p.get()[0];
+		double y = p.get()[1];
+		double dy = m * x + n - y;
+		dy *= (A.get()[0] <= B.get()[0]) ? 1: -1;
+		return dy >= 0;
+	}
+	
+	public double getAngle() {
+		return Math.atan((B.get()[1]-A.get()[1])/(B.get()[0]-A.get()[0]));
+	}
 }

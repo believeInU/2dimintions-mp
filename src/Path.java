@@ -32,26 +32,36 @@ public class Path {
 		double minD = Double.POSITIVE_INFINITY;
 		double d;
 		double ID=0;
+		double angle = 0;
+		boolean isr = false;
 		for (int i = 0; i < functions.length; i++) {
 			d = getError(functions[i],p);
 			Point current = getWantedPoint(i,p);
 			double r = points[i].disPoint(p);
-			if (functions[i].inLine(current)) {
-				if (Math.abs(minD) >= Math.abs(d)) {
-					minD = d;
-					ID = i;
-				}
-			}
 			if (Math.abs(minD) >= Math.abs(r)) {
 				minD = r;
 				ID = i + points.length;
+				angle = points[i].getAngle(p);
+				isr = true;
+			}
+			if (functions[i].inLine(current)) {
+				if (Math.abs(minD) >= Math.abs(d)) {
+					minD = Math.abs(d);
+					angle =  functions[i].getAngle()- Math.PI / 2;
+					ID = i;
+					isr = false;
+
+				}
 			}
 		}
 		if (Math.abs(minD) >= Math.abs(points[points.length-1].disPoint(p))) {
 			minD = points[points.length-1].disPoint(p);
 			ID = 2 * points.length-1;
+			angle = points[points.length-1].getAngle(p);
+			isr = true;
 		}
-		double[] distance = {ID, minD};
+		if (isr) minD = 0;
+		double[] distance = {ID, minD, angle};
 		return distance;
 	}
 	
@@ -80,7 +90,7 @@ public class Path {
 	
 	public double[] get(Point p) {	
 		double[] error =  getSmallestError(p);
-		double[] pos = {getLength( (int) error[0],p),error[1]};
+		double[] pos = {getLength( (int) error[0],p),error[1], error[2]};
 		return pos;
 	}
 	

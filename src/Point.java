@@ -27,4 +27,12 @@ public class Point {
 	public void printPoint() {
 		System.out.println("(" + x + "," + y + ")");
 	}
+	
+	public double getAngle(Point p) {
+		if (p.get()[0] == x)
+			return Math.PI/2 + (p.get()[1] <= y ? 0 : Math.PI);
+		double angle = Math.atan((p.get()[1]-y)/(p.get()[0]-x));
+		angle += p.get()[0] <= x ? 0 : Math.PI;
+		return angle;
+	}
 }

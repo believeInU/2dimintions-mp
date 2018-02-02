@@ -49,8 +49,17 @@ public class surfceMP {
 //		double velocityLeft = vtotal * Math.cos(angle2Robot) - vtotal * Math.sin(angle2Robot) * r / h;
 //		double velocityRight = vtotal * Math.cos(angle2Robot) + vtotal * Math.sin(angle2Robot) * r / h;
 //		double[] velocity = {velocityLeft, velocityRight};
+		double vc = Vforward * Math.cos(length[1]) + Verror * Math.cos(error[1]);
+		double vs = Vforward * Math.sin(length[1]) + Verror * Math.sin(error[1]);
+		double v = Math.sqrt(vc * vc + vs * vs);
 		
-		double[] velocity = {};
+		double angle;
+		if (vc == 0 )
+			angle = vs >= 0 ? Math.PI / 2 : - Math.PI / 2;
+		else 
+			angle = Math.atan(vs / vc) + (vc < 0 ? Math.PI : 0);
+		
+		double[] velocity = {v,angle,Verror,Vforward};
 		
 		return velocity;
 	}

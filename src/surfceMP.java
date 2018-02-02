@@ -33,14 +33,7 @@ public class surfceMP {
 		
 		if (distanceTravled(startSpeed,a,topVelocity) + distanceTravled(topVelocity,d,endSpeed) > totLength)
 			topVelocity = Math.sqrt((2 * a * d * totLength + d * startSpeed * startSpeed + a * endSpeed * endSpeed) / (a + d));
-		
-		if (length[0] == -1);
-		else if (length[0] < distanceTravled(startSpeed,a,topVelocity))
-			Vforward = velocityByDistance(startSpeed,a,0,length[0]);
-		else if (length[0] < totLength - distanceTravled(topVelocity,d,endSpeed))
-			Vforward = topVelocity;
-		else if (length[0] <= totLength)
-			Vforward = velocityByDistance(topVelocity,d,totLength - distanceTravled(topVelocity,d,endSpeed),length[0]);
+		Vforward = mp(length[0]);
 		
 		double maxVforward = Math.sqrt(maxVelocity * maxVelocity - Verror * Verror);
 		Vforward = Vforward > maxVforward ? maxVforward : Vforward;
@@ -59,16 +52,31 @@ public class surfceMP {
 		else 
 			angle = Math.atan(vs / vc) + (vc < 0 ? Math.PI : 0);
 		
-		double[] velocity = {v,angle,Verror,Vforward};
+		double[] velocity = {v,angle,Verror,Vforward,length[0]};
 		
 		return velocity;
 	}
 	
+	private double mp(double x) {
+		if (x == -1)
+			return 0;
+		if (x < distanceTravled(startSpeed,a,topVelocity)) {
+			return velocityByDistance(startSpeed,a,0,x);
+		}
+		if (x < totLength - distanceTravled(topVelocity,d,endSpeed)) {
+			return topVelocity;
+		}
+		if (x <= totLength) {
+			return velocityByDistance(topVelocity,-d,totLength - distanceTravled(topVelocity,d,endSpeed),x);
+		}
+		return 0;
+	}
+
 	public double velocityByDistance(double startSpeed, double a, double startPos, double x) {
 		return Math.sqrt(startSpeed * startSpeed + 2 * a * (x - startPos));
 	}
 	
 	public double distanceTravled(double startSpeed, double a, double endSpeed) {
-		return Math.abs((endSpeed * endSpeed - startSpeed * startSpeed) / 2 * a);
+		return Math.abs((endSpeed * endSpeed - startSpeed * startSpeed) / (2 * a));
 	}
 }

@@ -75,7 +75,7 @@ public class Path {
 	}
 	
 	public double getLength(int ID,Point p) {
-		if (ID == -1) return 0;
+		if (ID == -1) return -1;
 		
 		double total = 0;
 		if (ID >= points.length) {

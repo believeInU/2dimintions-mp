@@ -14,7 +14,8 @@ public class Main {
 		
 		
 		Point pos = new Point(0, 0);
-
+		double[] v = train.getMotorsVelocity(pos, 0);
+		System.out.println("leftVelocity: " + v[0] + ", rightVelocity: " + v[1]) ;
 //		System.out.print("z = [");
 //		for (double j = -3; j <= 19; j += 0.5) {
 //			for (double i = -3; i <= 19; i += 0.5) {
@@ -24,32 +25,32 @@ public class Main {
 //			} System.out.print(";");
 //		}System.out.println("];");
 		
-		System.out.print("z = [");
-		for (double j = -3; j <= 19; j += 0.5) {
-			for (double i = -3; i <= 19; i += 0.5) {
-				pos.setPoint(i, j);
-				double[] num = train.getV(pos);
-				System.out.print(Math.abs(num[0]) + ",");
-			} System.out.print(";");
-		}System.out.println("];");
+//		System.out.print("z = [");
+//		for (double j = -3; j <= 19; j += 0.5) {
+//			for (double i = -3; i <= 19; i += 0.5) {
+//				pos.setPoint(i, j);
+//				double[] num = train.getV(pos);
+//				System.out.print(Math.abs(num[0]) + ",");
+//			} System.out.print(";");
+//		}System.out.println("];");
+////		
+//		System.out.print("u = [");
+//		for (double j = -3; j <= 19; j += 0.5) {
+//			for (double i = -3; i <= 19; i += 0.5) {
+//				pos.setPoint(i, j);
+//				double[] num = train.getV(pos);
+//				System.out.print(Math.abs(num[0]) * Math.cos(num[1]) + ",");
+//			} System.out.print(";");
+//		}System.out.print("];");
 //		
-		System.out.print("u = [");
-		for (double j = -3; j <= 19; j += 0.5) {
-			for (double i = -3; i <= 19; i += 0.5) {
-				pos.setPoint(i, j);
-				double[] num = train.getV(pos);
-				System.out.print(Math.abs(num[0]) * Math.cos(num[1]) + ",");
-			} System.out.print(";");
-		}System.out.print("];");
-		
-		System.out.print("v = [");
-		for (double j = -3; j <= 19; j += 0.5) {
-			for (double i = -3; i <= 19; i += 0.5) {
-				pos.setPoint(i, j);
-				double[] num = train.getV(pos);
-				System.out.print(Math.abs(num[0]) * Math.sin(num[1]) + ",");
-			} System.out.print(";");
-		}System.out.println("];");
+//		System.out.print("v = [");
+//		for (double j = -3; j <= 19; j += 0.5) {
+//			for (double i = -3; i <= 19; i += 0.5) {
+//				pos.setPoint(i, j);
+//				double[] num = train.getV(pos);
+//				System.out.print(Math.abs(num[0]) * Math.sin(num[1]) + ",");
+//			} System.out.print(";");
+//		}System.out.println("];");
 //		
 //		System.out.print("g = [");
 //		for (double j = -3; j <= 19; j += 0.5) {

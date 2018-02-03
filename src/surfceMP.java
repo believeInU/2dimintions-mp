@@ -9,6 +9,9 @@ public class surfceMP {
 	private double totLength;
 	private double startSpeed;
 	private double endSpeed;
+	private double r = 1;
+	private double h = 1;
+
 
 	public surfceMP(Point[] p,double maxVelocity, double a, double d, double startSpeed, double endSpeed) {
 		track = new Path(p);
@@ -37,11 +40,7 @@ public class surfceMP {
 		
 		double maxVforward = Math.sqrt(maxVelocity * maxVelocity - Verror * Verror);
 		Vforward = Vforward > maxVforward ? maxVforward : Vforward;
-//		double angle2Robot = angle2start - angle;
-//		double vtotal = sumVelocity(x,y);
-//		double velocityLeft = vtotal * Math.cos(angle2Robot) - vtotal * Math.sin(angle2Robot) * r / h;
-//		double velocityRight = vtotal * Math.cos(angle2Robot) + vtotal * Math.sin(angle2Robot) * r / h;
-//		double[] velocity = {velocityLeft, velocityRight};
+
 		double vc = Vforward * Math.cos(length[1]) + Verror * Math.cos(error[1]);
 		double vs = Vforward * Math.sin(length[1]) + Verror * Math.sin(error[1]);
 		double v = Math.sqrt(vc * vc + vs * vs);
@@ -52,7 +51,7 @@ public class surfceMP {
 		else 
 			angle = Math.atan(vs / vc) + (vc < 0 ? Math.PI : 0);
 		
-		double[] velocity = {v,angle,Verror,Vforward,length[0]};
+		double[] velocity = {v,angle};
 		
 		return velocity;
 	}
@@ -78,5 +77,21 @@ public class surfceMP {
 	
 	public double distanceTravled(double startSpeed, double a, double endSpeed) {
 		return Math.abs((endSpeed * endSpeed - startSpeed * startSpeed) / (2 * a));
+	}
+	
+	public double[] getMotorsVelocity(Point p, double angle) {
+		double[] v = getV(p);
+		
+		double leftVelocity = v[0] * Math.cos(v[1]-angle) - v[0] * Math.sin(v[1]-angle) * r / h;
+		double rightVelocity = v[0] * Math.cos(v[1]-angle) + v[0] * Math.sin(v[1]-angle) * r / h;
+		
+		double[] velocity = {leftVelocity,rightVelocity};
+		
+		return velocity;
+	}
+	
+	public void setRatio(double hight, double distanceFromWheel) {
+		h = hight;
+		r = distanceFromWheel;
 	}
 }

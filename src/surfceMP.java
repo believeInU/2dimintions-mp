@@ -51,7 +51,7 @@ public class surfceMP {
 		else 
 			angle = Math.atan(vs / vc) + (vc < 0 ? Math.PI : 0);
 		
-		double[] velocity = {v,angle};
+		double[] velocity = {v,angle,length[0],length[1],error[0],error[1]};
 		
 		return velocity;
 	}

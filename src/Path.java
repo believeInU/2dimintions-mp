@@ -49,7 +49,7 @@ public class Path {
 			if (functions[i].inLine(current)) {
 				if (Math.abs(minD) >= Math.abs(d)) {
 					minD = Math.abs(d);
-					anglePerpendiculat =  functions[i].getAngle()- Math.PI / 2 + (functions[i].isRight(p) ? Math.PI: 0);
+					anglePerpendiculat = functions[i].getAngle()- Math.PI / 2 + (functions[i].isRight(p) ? Math.PI: 0);
 					angleParll = anglePerpendiculat + (functions[i].isRight(p) ? - Math.PI / 2 : Math.PI / 2);
 					ID = i;
 					isr = false;
